@@ -313,6 +313,10 @@ tr:hover {
     .print-notes {
         border: 1px solid #ddd;
     }
+    .export-config-button {
+        background-color: #3498db;
+        margin-right: 10px;
+    }
     .print-footer {
         position: fixed;
         bottom: 20px;

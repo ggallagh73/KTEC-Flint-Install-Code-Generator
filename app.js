@@ -18,6 +18,7 @@ const selectedAddonsList = document.getElementById('selected-addons-list');
 const resetButton = document.getElementById('reset');
 const printButton = document.getElementById('print');
 const exportButton = document.getElementById('export-excel');
+const exportConfigButton = document.getElementById('export-config'); // New button for exporting config
 
 // Excel related elements
 const excelUpload = document.getElementById('excel-upload');
@@ -121,6 +122,11 @@ function initializeApp() {
     // Set up export button
     if (exportButton) {
         exportButton.addEventListener('click', exportToExcel);
+    }
+    
+    // Set up export config button
+    if (exportConfigButton) {
+        exportConfigButton.addEventListener('click', exportAsConfigTemplate);
     }
     
     // Set up print view buttons
@@ -377,6 +383,52 @@ function saveDataToLocalStorage() {
     } catch (e) {
         console.error('Error saving data to localStorage:', e);
         alert('There was an error saving your data. This might be due to storage limits or privacy settings in your browser.');
+    }
+}
+
+// NEW FUNCTION: Export the current data as a config.js template file
+function exportAsConfigTemplate() {
+    try {
+        // Create the config template string
+        let configTemplate = `// KTEC Flint Install Code Generator - Configuration Template
+// Generated on ${new Date().toLocaleString()}
+// Replace this file with your config.js to use this configuration
+
+const configData = {
+    // Build numbers
+    builds: ${JSON.stringify(buildData, null, 4)},
+    
+    // Install codes with compatibility information
+    installCodes: ${JSON.stringify(installCodes, null, 4)},
+    
+    // Available add-ons
+    addons: ${JSON.stringify(addonData, null, 4)},
+    
+    // Add-on descriptions
+    addonDescriptions: ${JSON.stringify(addonDescriptionsData, null, 4)}
+};`;
+        
+        // Create a Blob with the config template
+        const blob = new Blob([configTemplate], { type: 'text/javascript' });
+        
+        // Create a download link
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'config_template.js';
+        
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        
+        // Clean up
+        document.body.removeChild(link);
+        
+        // Show success message
+        alert('Config template exported successfully. Use this file as config.js to restore your current configuration.');
+        
+    } catch (e) {
+        console.error('Error exporting config template:', e);
+        alert('There was an error exporting the config template.');
     }
 }
 
@@ -841,3 +893,4 @@ function preparePrintView() {
     // Show the print container
     printContainer.style.display = 'block';
 }
+            

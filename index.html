@@ -21,7 +21,8 @@
             <p>Upload your Excel file with build data, install codes, and compatibility information.</p>
             <input type="file" id="excel-upload" accept=".xlsx, .xls">
             <div id="upload-status"></div>
-            <div style="margin-top: 10px;">
+            <div style="margin-top: 10px; display: flex; gap: 10px;">
+                <button id="export-config" class="print-button">Export as Config</button>
                 <button id="clear-saved-data" class="reset-button">Clear Saved Data</button>
             </div>
         </div>
@@ -110,7 +111,7 @@
             </div>
             
             <div style="margin-top: 20px; text-align: right;">
-                <button id="export-excel" class="print-button">Export Config</button>
+                <button id="export-excel" class="print-button">Export Excel</button>
                 <button id="print" class="print-button">Print Results</button>
                 <button id="reset" class="reset-button">Reset Selection</button>
             </div>
